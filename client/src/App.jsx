@@ -931,7 +931,7 @@ function GoalSuccessScorecard({ score, totalQ, sessionGoal, resultsTable, button
     bgLight: 'rgba(232, 134, 74, 0.08)',
   };
 
-  const encouragingTexts = {
+  const encouragingTexts = useMemo(() => ({
     speed: [
       "You have shown extreme talent by choosing this and mastering the speed!",
       "Lightning fast! Your rapid calculations are absolutely elite.",
@@ -950,16 +950,16 @@ function GoalSuccessScorecard({ score, totalQ, sessionGoal, resultsTable, button
       "Consistency is key! You've shown extreme talent by choosing to review your knowledge.",
       "True learning mastery! Re-evaluating and refining your skills shows extreme talent."
     ]
-  }[sessionGoal] || [
+  })[sessionGoal] || [
     "Fantastic work! You have shown extreme talent by choosing this practice goal."
-  ];
+  ], [sessionGoal]);
 
   const [encourageText, setEncourageText] = useState('');
   useEffect(() => {
     const textList = encouragingTexts;
     const randomText = textList[Math.floor(Math.random() * textList.length)];
     setEncourageText(randomText);
-  }, [sessionGoal]);
+  }, [encouragingTexts]);
 
   return (
     <div className="goal-success-card" style={{ border: `2px solid ${goalDetails.bgGlow}`, boxShadow: `0 8px 32px ${goalDetails.bgGlow}, var(--shadow-card)` }}>
